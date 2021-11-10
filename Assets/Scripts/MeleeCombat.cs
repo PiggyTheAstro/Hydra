@@ -1,34 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeCombat : MonoBehaviour
 {
-    Animator anim;
-    List<GameObject> collided;
-    [SerializeField] Animator shieldAnimator; // Should be tied into 1 state machine
-    PlayerMovement movementScript;
-    void Start()
+    [SerializeField] private Animator shieldAnimator; // Should be tied into 1 state machine
+    private Animator animator;
+    private List<GameObject> collided;
+    private PlayerMovement movementScript;
+
+    private void Start()
     {
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         collided = new List<GameObject>();
         movementScript = GameObject.Find("Player").GetComponent<PlayerMovement>(); // This isn't ideal at all
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(Input.GetMouseButton(0) && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && shieldAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // Note to self: Please, for all that is holy, implement a state machine
+        if(Input.GetMouseButton(0) && animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && shieldAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // Note to self: Please, for all that is holy, implement a state machine
         {
-            anim.Play("Windup");
+            animator.Play("Windup");
             movementScript.SetSpeed(0.6f);
         }
-        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Windup") && !Input.GetMouseButton(0))
+        else if(animator.GetCurrentAnimatorStateInfo(0).IsName("Windup") && !Input.GetMouseButton(0))
         {
-            anim.Play("Strike");
+            animator.Play("Strike");
             movementScript.SetSpeed(1.0f);
         }
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Strike") && collided.Count > 0)
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Strike") && collided.Count > 0)
         {
             for(int i = 0; i < collided.Count; i++)
             {

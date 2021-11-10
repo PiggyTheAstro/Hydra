@@ -1,21 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShieldBlocking : MonoBehaviour
 {
-    Animator shieldAnimator;
-    [SerializeField] Animator spearAnimator;
-    PlayerMovement movementScript;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Animator spearAnimator; // Should be merged
+    private Animator shieldAnimator;
+    private PlayerMovement movementScript;
+
+    private void Start()
     {
         shieldAnimator = GetComponent<Animator>();
         movementScript = GameObject.Find("Player").GetComponent<PlayerMovement>(); // Not ideal
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButton(1) && shieldAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && spearAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // Please make a state machine already
         {

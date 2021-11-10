@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class CamControl : MonoBehaviour
 {
-    Transform player;
-    [SerializeField] float sensitivity;
-    float yRotation;
-    void Start()
+    [SerializeField] private float sensitivity;
+    private Transform player;
+    private float yRotation;
+
+    private void Start()
     {
         player = transform.parent;
         Cursor.lockState = CursorLockMode.Locked;
     }
-    void LateUpdate()
+    private void LateUpdate()
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")); // TODO: Separate input into a separate class
         player.Rotate(new Vector3(0f, input.x * sensitivity, 0f));
