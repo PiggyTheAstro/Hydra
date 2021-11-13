@@ -3,8 +3,6 @@ public class PlayerMovement : MonoBehaviour // I'm not sure if this being a mono
 {
     [SerializeField] private float baseSpeed;
     [SerializeField] private float jumpHeight;
-    [SerializeField] private Animator spear; // Weird dependencies
-    [SerializeField] private Animator shield;
     private CharacterController controller;
     private float speed;
     private bool isGrounded;

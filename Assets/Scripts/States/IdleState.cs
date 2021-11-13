@@ -8,7 +8,6 @@ public class IdleState : IState
     }
     public void Tick()
     {
-        Debug.Log("Idle");
         if(Input.GetMouseButtonDown(0))
         {
             machine.TransitionTo(System.Type.GetType("WeaponWindup"), 0f);

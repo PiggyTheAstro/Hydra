@@ -1,25 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 public class PlayerStateMachine : MonoBehaviour
 {
     IState playerState;
+    public PlayerMovement movement;
+    public Animator animator;
+    public MeleeCombat combat; // All 3 of these random references are weird
+    [SerializeField] private Text stateText;
     void Start()
     {
-        playerState = new IdleState();
-        playerState.OnEnter(this);
+        movement = GetComponent<PlayerMovement>();
+        animator = transform.parent.GetComponent<Animator>();
+        combat = GameObject.Find("Spear").GetComponent<MeleeCombat>(); // Ew
+        TransitionTo(System.Type.GetType("IdleState"), 0f);
     }
 
     void Update()
     {
         playerState.Tick();
+        stateText.text = playerState.ToString(); // Temporary
     }
+
     public void TransitionTo(System.Type type, float time)
     {
         if (time == 0f)
         {
-            playerState = System.Activator.CreateInstance(type) as IState;
+            playerState = System.Activator.CreateInstance(type) as IState; // A new state shouldn't be created every single time
             playerState.OnEnter(this);
+            animator.Play(type.ToString());
             return;
         }
         else
