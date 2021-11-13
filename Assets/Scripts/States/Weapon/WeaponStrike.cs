@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponStrike : IState
 {
-    PlayerStateMachine machine;
+    private PlayerStateMachine machine;
     public void OnEnter(PlayerStateMachine instance)
     {
         instance.TransitionTo(System.Type.GetType("WeaponRecovery"), 0.22f);

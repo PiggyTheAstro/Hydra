@@ -1,5 +1,7 @@
-﻿using UnityEngine;
-public class PlayerMovement : MonoBehaviour // I'm not sure if this being a monobehaviour is a good idea once I implement the state machine
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float baseSpeed;
     [SerializeField] private float jumpHeight;
@@ -9,7 +11,7 @@ public class PlayerMovement : MonoBehaviour // I'm not sure if this being a mono
     private float yVelocity;
     private bool canJump = true; // Having a "canJump" var is a bit clunky when it's only used once...
     private LayerMask layerMask;
-
+    private bool wantsToJump;
     private void Start()
     {
         controller = GetComponent<CharacterController>(); // Should probably turn this into a rigidbody at some point
@@ -19,14 +21,19 @@ public class PlayerMovement : MonoBehaviour // I'm not sure if this being a mono
     private void Update()
     {
         isGrounded = GroundedState();
-        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized; // Input should be separated into a different class
+        Vector2 input = new Vector2(InputManager.singleton.HorizontalAxis, InputManager.singleton.VerticalAxis).normalized;
         Vector3 moveDir = (transform.right * input.x + transform.forward * input.y).normalized * speed;
         moveDir.y = (moveDir.y + ApplyGravity()) * baseSpeed;
         controller.Move(moveDir * Time.deltaTime); // TODO: Add movement smoothing
 
-        if(Input.GetKeyDown(KeyCode.Space)) // Put this into the input manager too
+        if(InputManager.singleton.Jump)
         {
-            Jump(); // Add a delay which allows the jump to happen 0.1 seconds before the player grounds
+            wantsToJump = true;
+            StartCoroutine(EndJumpTimer());
+        }
+        if(wantsToJump && isGrounded && canJump)
+        {
+            Jump();
         }
     }
     private float ApplyGravity()
@@ -35,7 +42,7 @@ public class PlayerMovement : MonoBehaviour // I'm not sure if this being a mono
         {
             yVelocity -= 3f * Time.deltaTime;
         }
-        else if(yVelocity < 0f) // Falling state?
+        else if(yVelocity < 0f)
         {
             yVelocity = 0f;
         }
@@ -43,16 +50,18 @@ public class PlayerMovement : MonoBehaviour // I'm not sure if this being a mono
     }
     private void Jump()
     {
-        if(!isGrounded || !canJump)
-        {
-            return;
-        }
+        wantsToJump = false;
         yVelocity = jumpHeight;
     }
     private bool GroundedState()
     {
         Ray groundedRay = new Ray(transform.position, Vector3.down);
         return Physics.SphereCast(groundedRay, 0.5f, 0.6f, layerMask);
+    }
+    private IEnumerator EndJumpTimer()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        wantsToJump = false;
     }
     public void SetSpeed(float multiplier)
     {

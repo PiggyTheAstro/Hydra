@@ -3,12 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 public class PlayerStateMachine : MonoBehaviour
 {
-    IState playerState;
+    [SerializeField] private Text stateText;
+    private IState playerState;
     public PlayerMovement movement;
     public Animator animator;
     public MeleeCombat combat; // All 3 of these random references are weird
-    [SerializeField] private Text stateText;
-    void Start()
+    private void Start()
     {
         movement = GetComponent<PlayerMovement>();
         animator = transform.parent.GetComponent<Animator>();
@@ -16,7 +16,7 @@ public class PlayerStateMachine : MonoBehaviour
         TransitionTo(System.Type.GetType("IdleState"), 0f);
     }
 
-    void Update()
+    private void Update()
     {
         playerState.Tick();
         stateText.text = playerState.ToString(); // Temporary
@@ -37,9 +37,13 @@ public class PlayerStateMachine : MonoBehaviour
         }
 
     }
-    IEnumerator TransitionDelay(System.Type type, float time)
+    private IEnumerator TransitionDelay(System.Type type, float time)
     {
         yield return new WaitForSecondsRealtime(time);
         TransitionTo(type, 0f);
+    }
+    public string GetCurrentState()
+    {
+        return playerState.ToString();
     }
 }

@@ -9,7 +9,7 @@ public class ShieldBlock : IState
     }
     public void Tick()
     {
-        if(!Input.GetMouseButton(1))
+        if(!InputManager.singleton.Block)
         {
             machine.TransitionTo(System.Type.GetType("ShieldRecovery"), 0f);
         }

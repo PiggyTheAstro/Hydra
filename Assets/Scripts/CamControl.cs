@@ -13,7 +13,7 @@ public class CamControl : MonoBehaviour
     }
     private void LateUpdate()
     {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")); // TODO: Separate input into a separate class
+        Vector2 input = new Vector2(InputManager.singleton.MouseX, InputManager.singleton.MouseY);
         player.Rotate(new Vector3(0f, input.x * sensitivity, 0f));
         yRotation -= input.y * sensitivity;
         yRotation = Mathf.Clamp(yRotation, -90f, 90f);

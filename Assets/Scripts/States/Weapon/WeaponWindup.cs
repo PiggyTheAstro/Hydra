@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 public class WeaponWindup : IState
 {
-    PlayerStateMachine machine;
+    private PlayerStateMachine machine;
     public void OnEnter(PlayerStateMachine instance)
     {
         machine = instance;
@@ -9,7 +9,7 @@ public class WeaponWindup : IState
     }
     public void Tick()
     {
-        if(!Input.GetMouseButton(0))
+        if(!InputManager.singleton.Attack)
         {
             machine.TransitionTo(System.Type.GetType("WeaponStrike"), 0f);
         }
