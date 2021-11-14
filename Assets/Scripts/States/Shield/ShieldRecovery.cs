@@ -1,11 +1,11 @@
 ﻿public class ShieldRecovery : IState
 {
 
-    public void OnEnter(PlayerStateMachine instance)
+    public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        instance.TransitionTo(System.Type.GetType("IdleState"), 0.17f);
-        instance.movement.SetSpeed(1f);
-        instance.movement.SetJump(true);
+        instance.TransitionTo(typeof(IdleState), 0.17f);
+        movement.SetSpeedMultiplier(1f);
+        movement.SetJumpAbility(true);
     }
     public void Tick()
     {

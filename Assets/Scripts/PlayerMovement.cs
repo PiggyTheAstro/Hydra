@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IPhysicsController
 {
     [SerializeField] private float baseSpeed;
     [SerializeField] private float jumpHeight;
@@ -26,12 +26,12 @@ public class PlayerMovement : MonoBehaviour
         moveDir.y = (moveDir.y + ApplyGravity()) * baseSpeed;
         controller.Move(moveDir * Time.deltaTime); // TODO: Add movement smoothing
 
-        if(InputManager.singleton.Jump)
+        if (InputManager.singleton.Jump)
         {
             wantsToJump = true;
             StartCoroutine(EndJumpTimer());
         }
-        if(wantsToJump && isGrounded && canJump)
+        if (wantsToJump && isGrounded && canJump)
         {
             Jump();
         }
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         {
             yVelocity -= 3f * Time.deltaTime;
         }
-        else if(yVelocity < 0f)
+        else if (yVelocity < 0f)
         {
             yVelocity = 0f;
         }
@@ -63,12 +63,16 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
         wantsToJump = false;
     }
-    public void SetSpeed(float multiplier)
+    public void SetSpeedMultiplier(float multiplier)
     {
         speed = baseSpeed * multiplier;
     }
-    public void SetJump(bool val)
+    public void SetJumpAbility(bool val)
     {
-        canJump = val; // TODO: Having a setter on the jump state isn't ideal, move it into a state machine at some point
+        canJump = val;
+    }
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

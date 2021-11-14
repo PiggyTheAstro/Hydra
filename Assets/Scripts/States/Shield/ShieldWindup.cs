@@ -1,10 +1,10 @@
 ﻿public class ShieldWindup : IState
 {
-    public void OnEnter(PlayerStateMachine instance)
+    public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        instance.TransitionTo(System.Type.GetType("ShieldBlock"), 0.25f);
-        instance.movement.SetSpeed(0.4f);
-        instance.movement.SetJump(false);
+        instance.TransitionTo(typeof(ShieldBlock), 0.25f);
+        movement.SetSpeedMultiplier(0.4f);
+        movement.SetJumpAbility(false);
     }
     public void Tick()
     {

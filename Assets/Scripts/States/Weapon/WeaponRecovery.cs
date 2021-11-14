@@ -1,8 +1,8 @@
 ﻿public class WeaponRecovery : IState
 {
-    public void OnEnter(PlayerStateMachine instance)
+    public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        instance.TransitionTo(System.Type.GetType("IdleState"), 0.33f);
+        instance.TransitionTo(typeof(IdleState), 0.33f);
     }
     public void Tick()
     {

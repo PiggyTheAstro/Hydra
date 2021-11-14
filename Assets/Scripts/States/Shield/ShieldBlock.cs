@@ -2,8 +2,8 @@
 
 public class ShieldBlock : IState
 {
-    private PlayerStateMachine machine;
-    public void OnEnter(PlayerStateMachine instance)
+    private IStateSwitcher machine;
+    public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         machine = instance;
     }
@@ -11,7 +11,7 @@ public class ShieldBlock : IState
     {
         if(!InputManager.singleton.Block)
         {
-            machine.TransitionTo(System.Type.GetType("ShieldRecovery"), 0f);
+            machine.TransitionTo(typeof(ShieldRecovery), 0f);
         }
     }
 }
