@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class WeaponStrike : IState
 {
-    private IStateSwitcher machine;
     private List<GameObject> ignored;
     private IPhysicsController playerMovement;
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         instance.TransitionTo(typeof(WeaponRecovery), 0.22f);
         movement.SetSpeedMultiplier(1f);
-        machine = instance;
         playerMovement = movement;
         ignored = new List<GameObject>();
     }
