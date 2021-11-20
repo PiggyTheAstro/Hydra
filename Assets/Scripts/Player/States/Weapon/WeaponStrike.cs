@@ -12,6 +12,7 @@ public class WeaponStrike : IState
         movement.SetSpeedMultiplier(1f);
         playerMovement = movement;
         ignored = new List<GameObject>();
+        playerMovement.SetSpeedMultiplier(0f);
     }
     public void Tick()
     {
@@ -28,5 +29,6 @@ public class WeaponStrike : IState
                 break;
             }
         }
+        playerMovement.Move(playerMovement.GetTransform().forward, 7f);
     }
 }

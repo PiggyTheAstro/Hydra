@@ -5,6 +5,7 @@ public class IdleState : IState
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         machine = instance;
+        movement.SetSpeedMultiplier(1f);
     }
     public void Tick()
     {

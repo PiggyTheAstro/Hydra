@@ -63,6 +63,8 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
         yield return new WaitForSecondsRealtime(0.1f);
         wantsToJump = false;
     }
+
+    // The following are functions from the interface
     public void SetSpeedMultiplier(float multiplier)
     {
         speed = baseSpeed * multiplier;
@@ -74,5 +76,9 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
     public Transform GetTransform()
     {
         return transform;
+    }
+    public void Move(Vector3 dir, float speed)
+    {
+        controller.Move(dir * speed * Time.deltaTime);
     }
 }

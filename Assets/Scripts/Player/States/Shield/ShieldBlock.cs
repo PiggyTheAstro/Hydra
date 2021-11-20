@@ -6,6 +6,7 @@ public class ShieldBlock : IState
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         machine = instance;
+        movement.SetSpeedMultiplier(0.3f);
     }
     public void Tick()
     {
