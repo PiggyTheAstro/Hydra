@@ -11,14 +11,16 @@ public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
     private IState[] states;
     private void Start()
     {
-        states = new IState[7];
+        states = new IState[9];
         states[0] = new IdleState();
         states[1] = new WeaponWindup();
         states[2] = new WeaponStrike();
         states[3] = new WeaponRecovery();
-        states[4] = new ShieldWindup();
-        states[5] = new ShieldBlock();
-        states[6] = new ShieldRecovery();
+        states[4] = new ChargedStrike();
+        states[5] = new WindupCancel();
+        states[6] = new ShieldWindup();
+        states[7] = new ShieldBlock();
+        states[8] = new ShieldRecovery();
         TransitionTo(typeof(IdleState), 0f);
     }
 
