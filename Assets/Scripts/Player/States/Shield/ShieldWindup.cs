@@ -3,9 +3,9 @@
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         instance.TransitionTo(typeof(ShieldBlock), 0.25f);
-        movement.SetSpeedMultiplier(0.4f);
-        movement.SetJumpAbility(false);
-        movement.SetDashAbility(false);
+        movement.SetMultiplier(0.4f, 0);
+        movement.SetMultiplier(0f, 1);
+        movement.SetMultiplier(0.7f, 2);
     }
     public void Tick()
     {

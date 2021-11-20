@@ -3,7 +3,8 @@
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         instance.TransitionTo(typeof(IdleState), 0.4f);
-        movement.SetSpeedMultiplier(0.8f);
+        movement.SetMultiplier(0.8f, 0);
+        movement.SetMultiplier(1f, 2);
     }
     public void Tick()
     {

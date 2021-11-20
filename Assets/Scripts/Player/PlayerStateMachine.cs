@@ -1,12 +1,12 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
 {
     [SerializeField] private Text stateText;
     [SerializeField] private Animator animator;
-    [SerializeField] private PlayerMovement movement;
+    [SerializeField] private MovementManager movement;
     private IState playerState;
     private IState[] states;
     private void Start()

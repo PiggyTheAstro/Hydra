@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ChargedStrike : IState
@@ -11,7 +10,7 @@ public class ChargedStrike : IState
         instance.TransitionTo(typeof(WeaponRecovery), 0.3f);
         playerMovement = movement;
         ignored = new List<GameObject>();
-        playerMovement.SetSpeedMultiplier(0f);
+        playerMovement.SetMultiplier(0f, 0);
     }
     public void Tick()
     {

@@ -6,18 +6,24 @@ public class WeaponWindup : IState
     bool charged;
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        charged = false;
         chargeTime = 0;
+        charged = false;
         machine = instance;
-        movement.SetSpeedMultiplier(0.6f);
-        movement.SetDashAbility(false);
+        movement.SetMultiplier(0.6f, 0);
+        movement.SetMultiplier(0f, 2);
     }
     public void Tick()
     {
+        chargeTime += Time.deltaTime;
+        if (chargeTime > 0.5f)
+        {
+            charged = true;
+            chargeTime = 0.5f;
+        }
+        
         if (!charged)
         {
-            chargeTime += Time.deltaTime;
-            if(!InputManager.singleton.Attack)
+            if (!InputManager.singleton.Attack)
             {
                 machine.TransitionTo(typeof(WeaponStrike), 0f);
             }
@@ -28,14 +34,10 @@ public class WeaponWindup : IState
             {
                 machine.TransitionTo(typeof(WindupCancel), 0f);
             }
-            if(!InputManager.singleton.Attack)
+            if (!InputManager.singleton.Attack)
             {
                 machine.TransitionTo(typeof(ChargedStrike), 0f);
             }
-        }
-        if(chargeTime > 0.5)
-        {
-            charged = true;
         }
     }
 

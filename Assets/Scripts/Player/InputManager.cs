@@ -37,6 +37,6 @@ public class InputManager : MonoBehaviour // TODO: Reevaluate if this should be 
         attack = Input.GetMouseButton(0);
         block = Input.GetMouseButton(1);
         jump = Input.GetKey(KeyCode.Space);
-        dash = Input.GetKey(KeyCode.LeftShift);
+        dash = Input.GetKeyDown(KeyCode.LeftShift);
     }
 }

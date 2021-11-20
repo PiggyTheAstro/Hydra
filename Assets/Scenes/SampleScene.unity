@@ -968,9 +968,11 @@ GameObject:
   - component: {fileID: 1405736896}
   - component: {fileID: 1405736898}
   - component: {fileID: 1405736894}
-  - component: {fileID: 1405736899}
   - component: {fileID: 1405736900}
   - component: {fileID: 1405736897}
+  - component: {fileID: 1405736903}
+  - component: {fileID: 1405736899}
+  - component: {fileID: 1405736902}
   - component: {fileID: 1405736901}
   m_Layer: 8
   m_Name: Player
@@ -1063,7 +1065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateText: {fileID: 952944837}
   animator: {fileID: 1895502759}
-  movement: {fileID: 1405736899}
+  movement: {fileID: 1405736903}
 --- !u!33 &1405736898
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1085,7 +1087,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseSpeed: 5
-  jumpHeight: 1
 --- !u!143 &1405736900
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1104,25 +1105,46 @@ CharacterController:
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &1405736901
-Animator:
-  serializedVersion: 3
+--- !u!114 &1405736901
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405736893}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255f5be0d115087498d04255d2c3a655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDashSpeed: 3.5
+--- !u!114 &1405736902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405736893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35ce486a4a25f545b583ab8f31762d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseJumpHeight: 1
+  baseSpeed: 5
+--- !u!114 &1405736903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405736893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57e04d5092ab3694ea93b3ee747f4ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1405736900}
 --- !u!1 &1472558089
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,16 +1,14 @@
-﻿using UnityEngine;
-
-public class ShieldBlock : IState
+﻿public class ShieldBlock : IState
 {
     private IStateSwitcher machine;
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
         machine = instance;
-        movement.SetSpeedMultiplier(0.3f);
+        movement.SetMultiplier(0.3f, 0);
     }
     public void Tick()
     {
-        if(!InputManager.singleton.Block)
+        if (!InputManager.singleton.Block)
         {
             machine.TransitionTo(typeof(ShieldRecovery), 0f);
         }
