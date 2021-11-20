@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour // TODO: Reevaluate if this should be 
     private bool attack;
     private bool block;
     private bool jump;
-
+    private bool dash;
     public float HorizontalAxis { get => horizontalAxis; }
     public float VerticalAxis { get => verticalAxis; }
     public float MouseX { get => mouseX; }
@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour // TODO: Reevaluate if this should be 
     public bool Attack { get => attack; }
     public bool Block { get => block; }
     public bool Jump { get => jump; }
+    public bool Dash { get => dash; }
 
     void Awake() // TODO: Add functionality once you have more than 1 scene
     {
@@ -36,5 +37,6 @@ public class InputManager : MonoBehaviour // TODO: Reevaluate if this should be 
         attack = Input.GetMouseButton(0);
         block = Input.GetMouseButton(1);
         jump = Input.GetKey(KeyCode.Space);
+        dash = Input.GetKey(KeyCode.LeftShift);
     }
 }

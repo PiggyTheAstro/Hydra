@@ -6,6 +6,7 @@ public class IdleState : IState
     {
         machine = instance;
         movement.SetSpeedMultiplier(1f);
+        movement.SetDashAbility(true);
     }
     public void Tick()
     {

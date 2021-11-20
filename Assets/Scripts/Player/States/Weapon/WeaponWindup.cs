@@ -10,6 +10,7 @@ public class WeaponWindup : IState
         chargeTime = 0;
         machine = instance;
         movement.SetSpeedMultiplier(0.6f);
+        movement.SetDashAbility(false);
     }
     public void Tick()
     {

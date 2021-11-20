@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
     private bool canJump = true; // Having a "canJump" var is a bit clunky when it's only used once...
     private LayerMask layerMask;
     private bool wantsToJump;
+    private bool isDashing;
+    private bool canDash = true;
+    private bool cooldownElapsed = true;
     private void Start()
     {
         controller = GetComponent<CharacterController>(); // Should probably turn this into a rigidbody at some point
@@ -24,8 +27,20 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
         Vector2 input = new Vector2(InputManager.singleton.HorizontalAxis, InputManager.singleton.VerticalAxis).normalized;
         Vector3 moveDir = (transform.right * input.x + transform.forward * input.y).normalized * speed;
         moveDir.y = (moveDir.y + ApplyGravity()) * baseSpeed;
-        controller.Move(moveDir * Time.deltaTime); // TODO: Add movement smoothing
-
+        if (!isDashing)
+        {
+            controller.Move(moveDir * Time.deltaTime); // TODO: Add movement smoothing
+        }
+        else
+        {
+            Vector3 dashDir = new Vector3(moveDir.x, 0f, moveDir.z).normalized * (baseSpeed * 3.5f);
+            dashDir.y = moveDir.y;
+            controller.Move(dashDir * Time.deltaTime);
+        }
+        if(InputManager.singleton.Dash && canDash && cooldownElapsed)
+        {
+            Dash();
+        }
         if (InputManager.singleton.Jump)
         {
             wantsToJump = true;
@@ -36,6 +51,7 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
             Jump();
         }
     }
+    // The following is jumping/gravity
     private float ApplyGravity()
     {
         if (!isGrounded)
@@ -63,7 +79,25 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
         yield return new WaitForSecondsRealtime(0.1f);
         wantsToJump = false;
     }
-
+    // The following is the dash
+    
+    private void Dash()
+    {
+        isDashing = true;
+        cooldownElapsed = false;
+        StartCoroutine(StopDash());
+        StartCoroutine(DashCooldown());
+    }
+    private IEnumerator StopDash()
+    {
+        yield return new WaitForSecondsRealtime(0.15f);
+        isDashing = false;
+    }
+    private IEnumerator DashCooldown()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        cooldownElapsed = true;
+    }
     // The following are functions from the interface
     public void SetSpeedMultiplier(float multiplier)
     {
@@ -80,5 +114,9 @@ public class PlayerMovement : MonoBehaviour, IPhysicsController
     public void Move(Vector3 dir, float speed)
     {
         controller.Move(dir * speed * Time.deltaTime);
+    }
+    public void SetDashAbility(bool val)
+    {
+        canDash = val;
     }
 }

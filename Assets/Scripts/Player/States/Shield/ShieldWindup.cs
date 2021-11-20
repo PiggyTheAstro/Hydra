@@ -5,6 +5,7 @@
         instance.TransitionTo(typeof(ShieldBlock), 0.25f);
         movement.SetSpeedMultiplier(0.4f);
         movement.SetJumpAbility(false);
+        movement.SetDashAbility(false);
     }
     public void Tick()
     {
