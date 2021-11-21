@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+using Hydra.Timers;
 public class ChargedStrike : IState
 {
     private List<GameObject> ignored;
     private IPhysicsController playerMovement;
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        instance.TransitionTo(typeof(WeaponRecovery), 0.3f);
+        TimerManager.singleton.StartStateMachineTimer(0.3f, typeof(WeaponRecovery));
         playerMovement = movement;
         ignored = new List<GameObject>();
         playerMovement.SetMultiplier(0f, 0);

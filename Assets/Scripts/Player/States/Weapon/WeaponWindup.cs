@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 public class WeaponWindup : IState
 {
     private IStateSwitcher machine;
-    float chargeTime;
-    bool charged;
+    private float chargeTime;
+    private Type attackType;
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
+        attackType = typeof(WeaponStrike);
         chargeTime = 0;
-        charged = false;
         machine = instance;
         movement.SetMultiplier(0.6f, 0);
         movement.SetMultiplier(0f, 2);
@@ -15,29 +16,18 @@ public class WeaponWindup : IState
     public void Tick()
     {
         chargeTime += Time.deltaTime;
-        if (chargeTime > 0.5f)
+        if (chargeTime >= 0.5f)
         {
-            charged = true;
+            attackType = typeof(ChargedStrike);
             chargeTime = 0.5f;
-        }
-        
-        if (!charged)
-        {
-            if (!InputManager.singleton.Attack)
+            if(InputManager.singleton.Block)
             {
-                machine.TransitionTo(typeof(WeaponStrike), 0f);
+                machine.ChangeState(typeof(WindupCancel));
             }
         }
-        else
+        if (!InputManager.singleton.Attack)
         {
-            if (InputManager.singleton.Block)
-            {
-                machine.TransitionTo(typeof(WindupCancel), 0f);
-            }
-            if (!InputManager.singleton.Attack)
-            {
-                machine.TransitionTo(typeof(ChargedStrike), 0f);
-            }
+            machine.ChangeState(attackType);
         }
     }
 

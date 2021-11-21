@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using UnityEngine;
-public class JumpManager : MonoBehaviour, IMovementComponent
+﻿using UnityEngine;
+public class JumpManager : IMovementComponent
 {
-    [SerializeField] private float baseJumpHeight;
-    [SerializeField] private float baseSpeed;
+    private const float baseJumpHeight = 1;
+    private const float baseSpeed = 5;
     private float jumpHeight;
     private bool isGrounded;
     private float yVelocity;
     private LayerMask layerMask;
-    private void Start()
+    private Transform player;
+    public void Init(Transform parent)
     {
         jumpHeight = baseJumpHeight;
         layerMask = LayerMask.GetMask("Default");
+        player = parent;
     }
-    private void Update()
+    public void Tick()
     {
         isGrounded = GroundedState();
         if (InputManager.singleton.Jump && isGrounded)
@@ -47,7 +48,7 @@ public class JumpManager : MonoBehaviour, IMovementComponent
     }
     private bool GroundedState()
     {
-        Ray groundedRay = new Ray(transform.position, Vector3.down);
+        Ray groundedRay = new Ray(player.position, Vector3.down);
         return Physics.SphereCast(groundedRay, 0.5f, 0.6f, layerMask);
     }
 }

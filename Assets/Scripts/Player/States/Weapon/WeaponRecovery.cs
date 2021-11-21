@@ -1,8 +1,9 @@
-﻿public class WeaponRecovery : IState
+﻿using Hydra.Timers;
+public class WeaponRecovery : IState
 {
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        instance.TransitionTo(typeof(IdleState), 0.33f);
+        TimerManager.singleton.StartStateMachineTimer(0.33f, typeof(IdleState));
         movement.SetMultiplier(0.6f, 0);
     }
     public void Tick()

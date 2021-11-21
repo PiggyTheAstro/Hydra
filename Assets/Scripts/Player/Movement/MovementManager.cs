@@ -1,33 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementManager : MonoBehaviour, IPhysicsController
 {
     private List<IMovementComponent> components;
     [SerializeField] private CharacterController controller;
-    bool overriden;
-    private void Start()
+    private void Awake()
     {
         components = new List<IMovementComponent>();
-        components.Add(GetComponent<PlayerMovement>());
-        components.Add(GetComponent<JumpManager>());
-        components.Add(GetComponent<DashManager>());
-    }
-    void Update()
-    {
-        if(overriden)
+        components.Add(new PlayerMovement());
+        components.Add(new JumpManager());
+        components.Add(new DashManager());
+        for (int i = 0; i < components.Count; i++)
         {
-            overriden = false;
-            return;
+            components[i].Init(transform);
         }
-        Vector3 movement = new Vector3();
+    }
 
-        for(int i = 0; i < components.Count; i++)
+    private void Update()
+    {
+        Vector3 movement = new Vector3();
+        for (int i = 0; i < components.Count; i++)
         {
+            components[i].Tick();
             movement += components[i].MovementDirection();
         }
-
         controller.Move(movement * Time.deltaTime);
     }
     public void SetMultiplier(float multiplier, int index)
@@ -41,6 +38,5 @@ public class MovementManager : MonoBehaviour, IPhysicsController
     public void Move(Vector3 dir, float speed)
     {
         controller.Move(dir * speed * Time.deltaTime);
-        overriden = true;
     }
 }

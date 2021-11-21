@@ -10,7 +10,7 @@
     {
         if (!InputManager.singleton.Block)
         {
-            machine.TransitionTo(typeof(ShieldRecovery), 0f);
+            machine.ChangeState(typeof(ShieldRecovery));
         }
     }
 }

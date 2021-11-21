@@ -1,9 +1,10 @@
-﻿public class ShieldRecovery : IState
+﻿using Hydra.Timers;
+public class ShieldRecovery : IState
 {
 
     public void OnEnter(IStateSwitcher instance, IPhysicsController movement)
     {
-        instance.TransitionTo(typeof(IdleState), 0.17f);
+        TimerManager.singleton.StartStateMachineTimer(0.25f, typeof(IdleState));
         movement.SetMultiplier(1f, 0);
     }
     public void Tick()

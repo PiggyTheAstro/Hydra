@@ -1,20 +1,20 @@
-﻿using System.Collections;
+﻿using Hydra.Timers;
 using UnityEngine;
-
-public class DashManager : MonoBehaviour, IMovementComponent
+public class DashManager : IMovementComponent
 {
-    [SerializeField] float baseDashSpeed;
-    float dashSpeed;
-    bool cooldownElapsed = true;
-    Vector3 direction;
-    
-    void Start()
+    private const float baseDashSpeed = 3.5f;
+    private float dashSpeed;
+    private bool cooldownElapsed = true;
+    private Vector3 direction;
+    private Transform player;
+    public void Init(Transform parent)
     {
         dashSpeed = baseDashSpeed;
+        player = parent;
     }
-    void Update()
+    public void Tick()
     {
-        if(InputManager.singleton.Dash && cooldownElapsed)
+        if (InputManager.singleton.Dash && cooldownElapsed)
         {
             Dash();
         }
@@ -29,25 +29,23 @@ public class DashManager : MonoBehaviour, IMovementComponent
     }
     private void Dash()
     {
-        if(dashSpeed == 0f)
+        if (dashSpeed == 0f)
         {
             return;
         }
         Vector2 input = new Vector2(InputManager.singleton.HorizontalAxis, InputManager.singleton.VerticalAxis).normalized;
-        Vector3 dashDir = (transform.right * input.x + transform.forward * input.y).normalized * dashSpeed;
+        Vector3 dashDir = (player.right * input.x + player.forward * input.y).normalized * dashSpeed;
         direction = dashDir * dashSpeed;
         cooldownElapsed = false;
-        StartCoroutine(StopDash());
+        TimerManager.singleton.StartTimer(0.15f, StopDash);
     }
-    private IEnumerator StopDash()
+    private void StopDash()
     {
-        yield return new WaitForSecondsRealtime(0.15f);
         direction = Vector3.zero;
-        StartCoroutine(RechargeDash());
+        TimerManager.singleton.StartTimer(1.5f, RechargeDash);
     }
-    private IEnumerator RechargeDash()
+    private void RechargeDash()
     {
-        yield return new WaitForSecondsRealtime(1.5f);
         cooldownElapsed = true;
     }
 }

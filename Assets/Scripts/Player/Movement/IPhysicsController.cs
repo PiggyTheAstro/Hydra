@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 public interface IPhysicsController
 {
     void SetMultiplier(float multiplier, int index);

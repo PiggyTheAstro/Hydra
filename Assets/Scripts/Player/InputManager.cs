@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour // TODO: Reevaluate if this should be 
     public bool Jump { get => jump; }
     public bool Dash { get => dash; }
 
-    void Awake() // TODO: Add functionality once you have more than 1 scene
+    private void Awake() // TODO: Add functionality once you have more than 1 scene
     {
         if (singleton == null)
         {
@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour // TODO: Reevaluate if this should be 
         }
     }
 
-    void Update() // TODO: Add customizable input keys
+    private void Update() // TODO: Add customizable input keys
     {
         horizontalAxis = Input.GetAxisRaw("Horizontal");
         verticalAxis = Input.GetAxisRaw("Vertical");

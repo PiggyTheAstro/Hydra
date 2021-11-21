@@ -12,11 +12,11 @@
     {
         if (InputManager.singleton.Attack)
         {
-            machine.TransitionTo(typeof(WeaponWindup), 0f);
+            machine.ChangeState(typeof(WeaponWindup));
         }
         else if (InputManager.singleton.Block)
         {
-            machine.TransitionTo(typeof(ShieldWindup), 0f);
+            machine.ChangeState(typeof(ShieldWindup));
         }
     }
 

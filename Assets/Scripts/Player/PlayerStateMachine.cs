@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Hydra.Timers;
 public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
 {
     [SerializeField] private Text stateText;
@@ -11,6 +11,7 @@ public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
     private IState[] states;
     private void Start()
     {
+        TimerManager.singleton.InjectMachine(this);
         states = new IState[9];
         states[0] = new IdleState();
         states[1] = new WeaponWindup();
@@ -21,7 +22,7 @@ public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
         states[6] = new ShieldWindup();
         states[7] = new ShieldBlock();
         states[8] = new ShieldRecovery();
-        TransitionTo(typeof(IdleState), 0f);
+        ChangeState(typeof(IdleState));
     }
 
     private void Update()
@@ -29,32 +30,17 @@ public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
         playerState.Tick();
         stateText.text = playerState.ToString(); // Temporary
     }
-
-    public void TransitionTo(Type type, float time)
+    public void ChangeState(Type type)
     {
-        if (time == 0f)
+        for (int i = 0; i < states.Length; i++)
         {
-            for (int i = 0; i < states.Length; i++)
+            if (type == states[i].GetType())
             {
-                if (type == states[i].GetType())
-                {
-                    playerState = states[i];
-                }
+                playerState = states[i];
             }
-            playerState.OnEnter(this, movement);
-            animator.Play(type.ToString());
-            return;
         }
-        else
-        {
-            StartCoroutine(TransitionDelay(type, time));
-        }
-
-    }
-    private IEnumerator TransitionDelay(Type type, float time)
-    {
-        yield return new WaitForSecondsRealtime(time);
-        TransitionTo(type, 0f);
+        playerState.OnEnter(this, movement);
+        animator.Play(type.ToString());
     }
     public string GetCurrentState()
     {
