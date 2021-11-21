@@ -11,7 +11,7 @@ namespace Hydra
             private List<Timer> activeTimers;
             private List<StateTimer> stateMachineTimers;
             private IStateSwitcher stateMachine;
-            private void Start()
+            private void Awake()
             {
                 activeTimers = new List<Timer>();
                 stateMachineTimers = new List<StateTimer>();
