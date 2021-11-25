@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ToonFloor
+  m_Name: Ivory
   m_Shader: {fileID: 4800000, guid: 115c4965d88849a4a885548e0761d8a9, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -63,7 +63,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _MaxVal: 0.6
+    - _MaxVal: 0.7
     - _Metallic: 0
     - _MinVal: 0.3
     - _Mode: 0
@@ -75,6 +75,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.5176471, g: 0.4792577, b: 0.45501179, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

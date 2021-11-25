@@ -1,4 +1,4 @@
-﻿Shader "Custom/WorldSpaceSurf"
+Shader "Custom/WorldSpaceSurf"
 {
     Properties
     {
