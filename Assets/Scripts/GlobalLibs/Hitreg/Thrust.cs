@@ -3,7 +3,7 @@ namespace Hydra
 {
     namespace Hitreg
     {
-        public class Thrust
+        public class Thrust // Hitreg class used for stabs and thrusts that have fixed x/y positions
         {
             private Transform playerTransform;
             private float endDistance;
@@ -19,7 +19,7 @@ namespace Hydra
             public RaycastHit[] Hit()
             {
                 lerpT += Time.deltaTime;
-                Ray ray = new Ray(playerTransform.position, playerTransform.forward);
+                Ray ray = new Ray(playerTransform.position, playerTransform.forward); // The collider will always start at the player and travel forward
                 return Physics.SphereCastAll(ray, 0.1f, Mathf.Lerp(0f, endDistance, lerpT / strikeDuration));
             }
         }

@@ -5,6 +5,7 @@ Shader "Custom/WorldSpaceSurf"
         _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
         _AmbientValue("AmbientValue", float) = 0.0
+        _Tiling("Tile scale", float) = 1.0
     }
     SubShader
     {
@@ -20,6 +21,7 @@ Shader "Custom/WorldSpaceSurf"
 
         sampler2D _MainTex;
         float _AmbientValue;
+        float _Tiling;
         struct Input
         {
             float3 worldNormal;
@@ -42,22 +44,22 @@ Shader "Custom/WorldSpaceSurf"
 
             if (abs(IN.worldNormal.x) > 0.5)
             {
-                UV = IN.worldPos.yz;
+                UV = IN.worldPos.yz * _Tiling;
                 c = tex2D(_MainTex, UV);
             }
             else if (abs(IN.worldNormal.z) > 0.5)
             {
-                UV = IN.worldPos.xy;
+                UV = IN.worldPos.xy * _Tiling;
                 c = tex2D(_MainTex, UV);
             }
             else
             {
-                UV = IN.worldPos.xz;
+                UV = IN.worldPos.xz * _Tiling;
                 c = tex2D(_MainTex, UV);
             }
 
             o.Albedo = c.rgb * _Color;
-            o.Emission = o.Albedo * _AmbientValue;
+            o.Emission = o.Albedo;
         }
         ENDCG
     }

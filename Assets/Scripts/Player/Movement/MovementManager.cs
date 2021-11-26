@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementManager : MonoBehaviour, IPhysicsController
+public class MovementManager : MonoBehaviour, IPhysicsController // Controls the movement of the player
 {
     private List<IMovementComponent> components;
     [SerializeField] private CharacterController controller;
     private void Awake()
     {
         components = new List<IMovementComponent>();
-        components.Add(new PlayerMovement());
+        components.Add(new PlayerMovement()); // TODO: Serialize components instead of doing it in awake
         components.Add(new JumpManager());
         components.Add(new DashManager());
         for (int i = 0; i < components.Count; i++)
@@ -17,7 +17,7 @@ public class MovementManager : MonoBehaviour, IPhysicsController
         }
     }
 
-    private void Update()
+    private void Update() // Loops through all components and gets their desired movement, then merges them into 1 vector
     {
         Vector3 movement = new Vector3();
         for (int i = 0; i < components.Count; i++)

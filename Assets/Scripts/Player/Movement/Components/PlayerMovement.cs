@@ -13,7 +13,7 @@ public class PlayerMovement : IMovementComponent
     {
 
     }
-    public Vector3 MovementDirection()
+    public Vector3 MovementDirection() // Simply returns the direction of the WASD input
     {
         Vector2 input = new Vector2(InputManager.singleton.HorizontalAxis, InputManager.singleton.VerticalAxis).normalized;
         Vector3 moveDir = (player.right * input.x + player.forward * input.y).normalized * speed;

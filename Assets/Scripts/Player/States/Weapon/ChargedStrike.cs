@@ -18,18 +18,18 @@ public class ChargedStrike : IState
     public void Tick()
     {
 
-        // Remove duplication across strikes
+        // TODO: Remove duplication across strikes
 
         RaycastHit[] hit = hitbox.Hit();
         for (int i = 0; i < hit.Length; i++)
         {
-            if (hit[i].transform.gameObject.tag == "Enemy" && !ignored.Contains(hit[i].transform.gameObject))
+            if (hit[i].transform.gameObject.tag == "Enemy" && !ignored.Contains(hit[i].transform.gameObject)) // This is temporary, damage interface will have to be implemented
             {
                 hit[i].transform.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward + Vector3.up * 10000f, ForceMode.Impulse);
                 ignored.Add(hit[i].transform.gameObject);
                 break;
             }
         }
-        playerMovement.Move(playerMovement.GetTransform().forward, 10f);
+        playerMovement.Move(playerMovement.GetTransform().forward, 10f); // Overrides the movement channels to lunge
     }
 }

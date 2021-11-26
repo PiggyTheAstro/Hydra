@@ -5,7 +5,7 @@ namespace Hydra
 {
     namespace Timers
     {
-        public class TimerManager : MonoBehaviour
+        public class TimerManager : MonoBehaviour // TODO: Run timers on another thread
         {
             public static TimerManager singleton;
             private List<Timer> activeTimers;
@@ -15,12 +15,12 @@ namespace Hydra
             {
                 activeTimers = new List<Timer>();
                 stateMachineTimers = new List<StateTimer>();
-                if (singleton == null)
+                if (singleton == null) // TODO: Make it carry over multiple scenes
                 {
                     singleton = this;
                 }
             }
-            private void Update()
+            private void Update() // Since it utilizes deltaTime, this timer system will always be frame-accurate and not cause garbage
             {
                 for (int i = 0; i < activeTimers.Count; i++)
                 {

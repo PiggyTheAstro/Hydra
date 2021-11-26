@@ -23,11 +23,11 @@ public class DashManager : IMovementComponent
     {
         return direction;
     }
-    public void MultiplyIntensity(float multiplier)
+    public void MultiplyIntensity(float multiplier) // Multiplier affects dash speed
     {
         dashSpeed = baseDashSpeed * multiplier;
     }
-    private void Dash()
+    private void Dash() // Dashes in the input direction for 0.15 seconds
     {
         if (dashSpeed == 0f)
         {
@@ -39,7 +39,7 @@ public class DashManager : IMovementComponent
         cooldownElapsed = false;
         TimerManager.singleton.StartTimer(0.15f, StopDash);
     }
-    private void StopDash()
+    private void StopDash() // Dash cooldown is 1.5 for now, to be made adjustable later
     {
         direction = Vector3.zero;
         TimerManager.singleton.StartTimer(1.5f, RechargeDash);

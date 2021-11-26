@@ -3,7 +3,7 @@ namespace Hydra
 {
     namespace Timers
     {
-        public class Timer
+        public class Timer // Base timer
         {
             public Timer()
             {
