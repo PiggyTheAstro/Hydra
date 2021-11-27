@@ -17,7 +17,7 @@ namespace Hydra
             }
             protected float time;
             protected float elapsedTime;
-            private Action function;
+            protected Action function;
 
             public float Time { get => time; }
             public float ElapsedTime { get => elapsedTime; set => elapsedTime = value; }

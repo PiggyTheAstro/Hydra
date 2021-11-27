@@ -16,11 +16,15 @@ namespace Hydra
                 strikeDuration = strikeTime;
                 lerpT = 0f;
             }
-            public RaycastHit[] Hit()
+            public RaycastHit Hit()
             {
                 lerpT += Time.deltaTime;
                 Ray ray = new Ray(playerTransform.position, playerTransform.forward); // The collider will always start at the player and travel forward
-                return Physics.SphereCastAll(ray, 0.1f, Mathf.Lerp(0f, endDistance, lerpT / strikeDuration));
+                lerpT += Time.deltaTime;
+                RaycastHit hit;
+                Physics.SphereCast(ray, 0.1f, out hit, Mathf.Lerp(0f, endDistance, lerpT / strikeDuration));
+                return hit;
+                //return Physics.SphereCastAll(ray, 0.1f, Mathf.Lerp(0f, endDistance, lerpT / strikeDuration));
             }
         }
     }

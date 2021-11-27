@@ -17,16 +17,14 @@ public class WeaponStrike : IState
     }
     public void Tick()
     {
-        // Remove duplicate ASAP
-        // I know this is awful, don't comment
-        RaycastHit[] hit = hitbox.Hit();
-        for (int i = 0; i < hit.Length; i++)
+        RaycastHit hit = hitbox.Hit();
+        if (hit.transform != null)
         {
-            if (hit[i].transform.gameObject.tag == "Enemy" && !ignored.Contains(hit[i].transform.gameObject))
+            IDamageable enemy = hit.transform.GetComponent<IDamageable>();
+            if (enemy != null && !ignored.Contains(hit.transform.gameObject))
             {
-                hit[i].transform.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward + Vector3.up * 10000f, ForceMode.Impulse);
-                ignored.Add(hit[i].transform.gameObject);
-                break;
+                enemy.OnDamage();
+                ignored.Add(hit.transform.gameObject);
             }
         }
         playerMovement.Move(playerMovement.GetTransform().forward, 3f);

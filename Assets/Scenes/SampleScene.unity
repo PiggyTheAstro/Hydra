@@ -1187,6 +1187,16 @@ MonoBehaviour:
   stateText: {fileID: 952944837}
   animator: {fileID: 1895502759}
   movement: {fileID: 1405736903}
+  serializedStates:
+  - IdleState
+  - WeaponWindup
+  - WeaponStrike
+  - WeaponRecovery
+  - ChargedStrike
+  - WindupCancel
+  - ShieldWindup
+  - ShieldBlock
+  - ShieldRecovery
 --- !u!33 &1405736898
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1350,6 +1360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003778c75897a814ab69b3ca780fcbef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachine: {fileID: 1405736897}
 --- !u!4 &1817973518
 Transform:
   m_ObjectHideFlags: 0
@@ -1523,7 +1534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148619952284}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4, y: 0.72, z: 2}
+  m_LocalPosition: {x: -4.6, y: 0.72, z: 1.02}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 6645823805172770812}
@@ -1684,6 +1695,7 @@ GameObject:
   - component: {fileID: 543450653160249894}
   - component: {fileID: 919132148619952286}
   - component: {fileID: 919132148619952288}
+  - component: {fileID: 919132148619952285}
   m_Layer: 0
   m_Name: Scarecrow
   m_TagString: Enemy
@@ -1691,6 +1703,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &919132148619952285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148619952284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f065b87d469e947ba8015f48110678, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &919132148619952286
 BoxCollider:
   m_ObjectHideFlags: 0
