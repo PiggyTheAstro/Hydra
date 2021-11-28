@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Hydra.Parsing;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using Hydra.Timers;
 public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
 {
     [SerializeField] private Text stateText;
@@ -13,11 +13,9 @@ public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
     private void Start()
     {
         states = new IState[9];
-        for(int i = 0; i < states.Length; i++)
+        for (int i = 0; i < states.Length; i++)
         {
-            var stateObj = Activator.CreateInstance(Type.GetType(serializedStates[i]));
-            states[i] = stateObj as IState;
-            
+            states[i] = StringParser.instance.StringToInstance(serializedStates[i]) as IState;
         }
         ChangeState(states[0].GetType());
     }

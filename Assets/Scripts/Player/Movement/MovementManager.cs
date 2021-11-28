@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Hydra.Parsing;
+using System.Collections.Generic;
 using UnityEngine;
-
 public class MovementManager : MonoBehaviour, IPhysicsController // Controls the movement of the player
 {
     private List<IMovementComponent> components;
     [SerializeField] private CharacterController controller;
+    [SerializeField] private string[] serializedComponents;
     private void Awake()
     {
         components = new List<IMovementComponent>();
-        components.Add(new PlayerMovement()); // TODO: Serialize components instead of doing it in awake
-        components.Add(new JumpManager());
-        components.Add(new DashManager());
-        for (int i = 0; i < components.Count; i++)
+        for (int i = 0; i < serializedComponents.Length; i++)
         {
+            components.Add(StringParser.instance.StringToInstance(serializedComponents[i]) as IMovementComponent);
             components[i].Init(transform);
         }
     }

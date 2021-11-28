@@ -25,7 +25,7 @@ namespace Hydra
                     activeTimers[i].ElapsedTime += Time.deltaTime;
                     if (activeTimers[i].Time <= activeTimers[i].ElapsedTime)
                     {
-                        if(activeTimers[i] is StateTimer)
+                        if (activeTimers[i] is StateTimer)
                         {
                             stateMachine.ChangeState((activeTimers[i] as StateTimer).Param);
                             activeTimers.RemoveAt(i);

@@ -20,7 +20,7 @@ public class WeaponWindup : IState
         {
             attackType = typeof(ChargedStrike);
             chargeTime = 0.5f;
-            if(InputManager.singleton.Block)
+            if (InputManager.singleton.Block)
             {
                 machine.ChangeState(typeof(WindupCancel));
             }

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DummyScript : MonoBehaviour, IDamageable
 {
-    Rigidbody rb;
-    void Start()
+    private Rigidbody rb;
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
