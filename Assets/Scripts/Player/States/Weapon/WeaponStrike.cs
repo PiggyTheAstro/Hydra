@@ -19,11 +19,12 @@ public class WeaponStrike : IState
         RaycastHit hit = hitbox.Hit();
         if (hit.transform != null && canHit)
         {
-            IDamageable enemy = hit.transform.GetComponent<IDamageable>();
+            IDamageable enemy = hit.transform.root.GetComponent<IDamageable>();
             if (enemy != null)
             {
                 enemy.OnDamage();
                 canHit = false;
+                TimerManager.singleton.Pause(0.1f);
             }
         }
         playerMovement.Move(playerMovement.GetTransform().forward, 3f);

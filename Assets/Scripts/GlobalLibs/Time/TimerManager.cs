@@ -9,10 +9,12 @@ namespace Hydra
         {
             public static TimerManager singleton;
             private List<Timer> activeTimers;
+            private List<Timer> unscaledTimers;
             [SerializeField] private PlayerStateMachine stateMachine;
             private void Start()
             {
                 activeTimers = new List<Timer>();
+                unscaledTimers = new List<Timer>();
                 if (singleton == null) // TODO: Make it carry over multiple scenes
                 {
                     singleton = this;
@@ -35,6 +37,15 @@ namespace Hydra
                         activeTimers.RemoveAt(i);
                     }
                 }
+                for(int i = 0; i < unscaledTimers.Count; i++)
+                {
+                    unscaledTimers[i].ElapsedTime += Time.unscaledDeltaTime;
+                    if(unscaledTimers[i].Time <= unscaledTimers[i].ElapsedTime)
+                    {
+                        unscaledTimers[i].Function();
+                        unscaledTimers.RemoveAt(i);
+                    }
+                }
             }
             public void StartTimer(float time, Action func)
             {
@@ -43,6 +54,19 @@ namespace Hydra
             public void StartStateMachineTimer(float time, Type param)
             {
                 activeTimers.Add(new StateTimer(time, param));
+            }
+            public void StartUnscaledTimer(float time, Action func)
+            {
+                unscaledTimers.Add(new Timer(time, func));
+            }
+            public void Pause(float pauseTime)
+            {
+                StartUnscaledTimer(pauseTime, Unpause);
+                Time.timeScale = 0f;
+            }
+            public void Unpause()
+            {
+                Time.timeScale = 1f;
             }
         }
     }

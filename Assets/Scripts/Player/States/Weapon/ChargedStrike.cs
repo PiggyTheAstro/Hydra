@@ -16,14 +16,19 @@ public class ChargedStrike : IState
     }
     public void Tick()
     {
-        RaycastHit hit = hitbox.Hit();
-        if (hit.transform != null && canHit)
+        if(!canHit)
         {
-            IDamageable enemy = hit.transform.GetComponent<IDamageable>();
+            return;
+        }
+        RaycastHit hit = hitbox.Hit();
+        if (hit.transform != null)
+        {
+            IDamageable enemy = hit.transform.root.GetComponent<IDamageable>();
             if (enemy != null)
             {
                 enemy.OnDamage();
                 canHit = false;
+                TimerManager.singleton.Pause(0.15f);
             }
         }
         playerMovement.Move(playerMovement.GetTransform().forward, 10f); // Overrides the movement channels to lunge

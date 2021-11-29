@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
 {
-    [SerializeField] private Text stateText;
     [SerializeField] private Animator animator;
     [SerializeField] private MovementManager movement;
     [SerializeField] private string[] serializedStates;
@@ -23,7 +22,6 @@ public class PlayerStateMachine : MonoBehaviour, IStateSwitcher
     private void Update()
     {
         playerState.Tick();
-        stateText.text = playerState.ToString(); // Temporary
     }
     public void ChangeState(Type type)
     {
