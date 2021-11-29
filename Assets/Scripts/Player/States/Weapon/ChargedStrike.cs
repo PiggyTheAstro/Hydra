@@ -26,7 +26,8 @@ public class ChargedStrike : IState
             IDamageable enemy = hit.transform.root.GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.OnDamage();
+                HitInfo hitInfo = new HitInfo(playerMovement.GetTransform().forward, 10f);
+                enemy.OnDamage(hitInfo);
                 canHit = false;
                 TimerManager.singleton.Pause(0.15f);
             }

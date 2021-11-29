@@ -16,15 +16,19 @@ public class WeaponStrike : IState
     }
     public void Tick()
     {
+        if(!canHit)
+        {
+            return;
+        }
         RaycastHit hit = hitbox.Hit();
-        if (hit.transform != null && canHit)
+        if (hit.transform != null)
         {
             IDamageable enemy = hit.transform.root.GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.OnDamage();
+                HitInfo hitInfo = new HitInfo(playerMovement.GetTransform().forward, 5f);
+                enemy.OnDamage(hitInfo);
                 canHit = false;
-                TimerManager.singleton.Pause(0.1f);
             }
         }
         playerMovement.Move(playerMovement.GetTransform().forward, 3f);

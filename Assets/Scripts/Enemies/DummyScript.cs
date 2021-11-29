@@ -8,8 +8,8 @@ public class DummyScript : MonoBehaviour, IDamageable
     {
         rb = GetComponent<Rigidbody>();
     }
-    public void OnDamage()
+    public void OnDamage(HitInfo hitInfo)
     {
-        rb.AddForce(Vector3.up * 10000f, ForceMode.Impulse);
+        rb.AddForce((Vector3.up + new Vector3(hitInfo.hitDir.x, 0f, hitInfo.hitDir.z)) * hitInfo.hitStrength * 1000f, ForceMode.Impulse);
     }
 }

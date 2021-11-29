@@ -1,4 +1,4 @@
 ﻿public interface IDamageable
 {
-    void OnDamage();
+    void OnDamage(HitInfo hitInfo);
 }
