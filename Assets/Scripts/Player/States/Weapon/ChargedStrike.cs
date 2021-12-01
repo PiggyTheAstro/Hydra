@@ -16,7 +16,8 @@ public class ChargedStrike : IState
     }
     public void Tick()
     {
-        if(!canHit)
+        playerMovement.Move(playerMovement.GetTransform().forward, 5f); // Lunging is split up into 2 parts, so that it slows down after a hit
+        if (!canHit)
         {
             return;
         }
@@ -32,6 +33,6 @@ public class ChargedStrike : IState
                 TimerManager.singleton.Pause(0.15f);
             }
         }
-        playerMovement.Move(playerMovement.GetTransform().forward, 10f); // Overrides the movement channels to lunge
+        playerMovement.Move(playerMovement.GetTransform().forward, 5f); // Overrides the movement channels to lunge
     }
 }

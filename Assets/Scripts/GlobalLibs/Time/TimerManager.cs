@@ -55,7 +55,7 @@ namespace Hydra
             {
                 activeTimers.Add(new StateTimer(time, param));
             }
-            public void StartUnscaledTimer(float time, Action func)
+            public void StartUnscaledTimer(float time, Action func) // This timer will run even when the game is paused
             {
                 unscaledTimers.Add(new Timer(time, func));
             }
